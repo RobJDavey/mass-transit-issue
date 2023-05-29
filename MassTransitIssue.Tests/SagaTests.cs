@@ -15,7 +15,7 @@ public class SagaTestsBase
     [Fact]
     public async Task TestCancelled()
     {
-        var serviceProvider = CreateServiceProvider();
+        await using var serviceProvider = CreateServiceProvider();
         var harness = serviceProvider.GetRequiredService<ITestHarness>();
         await harness.Start();
 
@@ -50,7 +50,7 @@ public class SagaTestsBase
     [Fact]
     public async Task TestNotify()
     {
-        var serviceProvider = CreateServiceProvider();
+        await using var serviceProvider = CreateServiceProvider();
         var harness = serviceProvider.GetRequiredService<ITestHarness>();
         await harness.Start();
 
@@ -75,7 +75,7 @@ public class SagaTestsBase
         Assert.True(await harness.Published.Any<Notify>(), "Bus - Notify not published");
     }
 
-    private static IServiceProvider CreateServiceProvider()
+    private static ServiceProvider CreateServiceProvider()
     {
         IConfiguration configuration = new ConfigurationBuilder()
             .Build();
